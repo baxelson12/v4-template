@@ -17,4 +17,5 @@ struct PositionInputs {
     uint256 amount0Max;
     uint256 amount1Max;
     uint256 deadline;
+    bytes hookData;
 }
