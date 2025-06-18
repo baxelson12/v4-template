@@ -8,7 +8,7 @@ import {Stateful} from "../mixins/Stateful.sol";
 ///       This simply automates creating your own deployments.json in the respective
 ///       inputs/{chainid}/ folder and could be skipped if deployments.json already exists.
 contract DetermineDependenciesScript is Stateful {
-    /// @dev Fresh deployment entrypoint
+    /// @dev Composed/orchestrator contract entrypoint
     function run() public {
         _writeState(
             AddressConstants.getPermit2Address(),
@@ -19,7 +19,7 @@ contract DetermineDependenciesScript is Stateful {
         );
     }
 
-    /// @dev CLI use entrypoint
+    /// @dev CLI entrypoint
     function run(address permit2, address poolManager, address positionManager, address swapRouter, address deployer)
         public
     {
