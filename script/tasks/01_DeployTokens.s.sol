@@ -9,12 +9,18 @@ import {TokenUtils} from "../utils/TokenUtils.sol";
 /// @dev Deploy mock tokens for local testing
 ///   ...or simply update state for existing tokens
 contract DeployTokensScript is Stateful {
+    address public deployer = readStateAddress("deployer");
+
     /// @dev Composed/orchestrator contract entrypoint
     function run() public {
+        require(deployer != address(0), "Deployer not found in state file.");
+
         vm.startBroadcast();
         // Using placeholder/mock tokens here
         IERC20 token0 = IERC20(address(new MockERC20("MockTokenA", "MOCKA", 18)));
+        MockERC20(address(token0)).mint(deployer, 100 ether);
         IERC20 token1 = IERC20(address(new MockERC20("MockTokenB", "MOCKB", 18)));
+        MockERC20(address(token0)).mint(deployer, 100 ether);
         vm.stopBroadcast();
 
         _writeAndLabel(token0, token1);
