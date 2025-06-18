@@ -39,16 +39,7 @@ contract DeployTokensScript is Stateful {
         writeStateAddress("token0", address(token0));
         writeStateAddress("token1", address(token1));
 
-        // Try to get token symbol for better readability
-        try token0.symbol() returns (string memory symbol) {
-            vm.label(address(token0), string.concat("Token0 (", symbol, ")"));
-        } catch {
-            vm.label(address(token0), "Token0");
-        }
-        try token1.symbol() returns (string memory symbol) {
-            vm.label(address(token1), string.concat("Token1 (", symbol, ")"));
-        } catch {
-            vm.label(address(token1), "Token1");
-        }
+        vm.label(address(token0), string.concat("Token0 (", TokenUtils.getTokenLabel(token0), ")"));
+        vm.label(address(token1), string.concat("Token1 (", TokenUtils.getTokenLabel(token1), ")"));
     }
 }

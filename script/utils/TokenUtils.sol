@@ -13,4 +13,18 @@ library TokenUtils {
 
         return uint160(token0addr) < uint160(token1addr) ? (token0, token1) : (token1, token0);
     }
+
+    /// @dev Attempts to obtain a descriptive label/symbol for a token
+    function getTokenLabel(IERC20 _token) public view returns (string memory) {
+        // 0 address won't revert in try/catch
+        if (address(_token) == address(0)) {
+            return "ETH";
+        }
+
+        try _token.symbol() returns (string memory symbol) {
+            return string.concat("(", symbol, ")");
+        } catch {
+            return string.concat("(No Symbol)");
+        }
+    }
 }
