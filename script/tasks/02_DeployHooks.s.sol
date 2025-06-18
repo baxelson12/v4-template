@@ -10,10 +10,11 @@ import {Stateful} from "../mixins/Stateful.sol";
 
 /// @dev Mines the address and deploys a hook contract
 contract DeployHooksScript is Stateful {
+    IPoolManager public poolManager = IPoolManager(readStateAddress("poolManager"));
+
     /// @dev Composed/orchestrator contract entrypoint
     function run() public {
-        address poolManager = readStateAddress("poolManager");
-        require(poolManager != address(0), "PoolManager address not found in state file.");
+        require(address(poolManager) != address(0), "PoolManager address not found in state file.");
 
         // hook contracts must have specific flags encoded in the address
         uint160 flags = uint160(
@@ -28,11 +29,11 @@ contract DeployHooksScript is Stateful {
 
         // Deploy the hook using CREATE2
         vm.startBroadcast();
-        Counter counter = new Counter{salt: salt}(IPoolManager(poolManager));
+        Counter counter = new Counter{salt: salt}(poolManager);
         vm.stopBroadcast();
 
         require(address(counter) == hookAddress, "DeployHookScript: Hook Address Mismatch");
-        _writeAndLabel(poolManager);
+        _writeAndLabel(address(poolManager));
     }
 
     /// @dev CLI entrypoint

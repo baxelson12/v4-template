@@ -55,6 +55,7 @@ contract CreatePoolAndAddLiquidityScript is Stateful, ParameterBuilder, Calldata
             positionInputs.deadline,
             positionInputs.hookData
         );
+        // If the pool is an eth pair, native tokens need to be transferred
         uint256 valueToPass = currency0.isAddressZero() ? positionInputs.amount0Max : 0;
 
         vm.startBroadcast();

@@ -40,14 +40,14 @@ contract DetermineDependenciesScript is Stateful {
         _writeAndLabelAddress("swapRouter", swapRouter);
         _writeAndLabelAddress("deployer", deployer);
     }
-    /// @dev Helper, writes state and labels address in one go
 
+    /// @dev Helper, writes state and labels address in one go
     function _writeAndLabelAddress(string memory key, address value) private {
         writeStateAddress(key, value);
         vm.label(value, key);
     }
-    /// @dev Gets the deployer address from the vm's broadcast context
 
+    /// @dev Gets the deployer address from the vm's broadcast context
     function _getDeployer() private view returns (address) {
         return msg.sender;
     }
