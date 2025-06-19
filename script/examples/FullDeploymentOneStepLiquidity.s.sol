@@ -24,8 +24,8 @@ contract OneStepLiquidityScript is Script {
         token0Amount: 1 ether,
         token1Amount: 1 ether,
         // We're just creating a 50/50 position surrounding starting price
-        tickLower: TickMath.getTickAtSqrtPrice(poolInputs.startingPrice) - 750,
-        tickUpper: TickMath.getTickAtSqrtPrice(poolInputs.startingPrice) + 750,
+        tickLower: TickMath.getTickAtSqrtPrice(poolInputs.startingPrice) - 750 * poolInputs.tickSpacing,
+        tickUpper: TickMath.getTickAtSqrtPrice(poolInputs.startingPrice) + 750 * poolInputs.tickSpacing,
         // Position slippage
         amount0Max: 1 ether + 1 wei,
         amount1Max: 1 ether + 1 wei,
